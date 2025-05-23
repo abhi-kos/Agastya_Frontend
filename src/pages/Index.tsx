@@ -5,19 +5,22 @@ import ChatInterface from '@/components/ChatInterface';
 
 const Index = () => {
   const [showChat, setShowChat] = useState(false);
+  const [initialMessage, setInitialMessage] = useState('');
 
-  const handleStartChat = () => {
+  const handleStartChat = (message?: string) => {
+    if (message) {
+      setInitialMessage(message);
+    }
     setShowChat(true);
-  };
-
-  const handleBackToLanding = () => {
-    setShowChat(false);
   };
 
   return (
     <div className="min-h-screen">
       {showChat ? (
-        <ChatInterface onBack={handleBackToLanding} />
+        <ChatInterface 
+          onBack={() => setShowChat(false)} 
+          initialMessage={initialMessage}
+        />
       ) : (
         <LandingScreen onStartChat={handleStartChat} />
       )}

@@ -14,9 +14,10 @@ interface Message {
 
 interface ChatInterfaceProps {
   onBack: () => void;
+  initialMessage?: string;
 }
 
-const ChatInterface: React.FC<ChatInterfaceProps> = ({ onBack }) => {
+const ChatInterface: React.FC<ChatInterfaceProps> = ({ onBack, initialMessage }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -29,6 +30,34 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onBack }) => {
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  // Process initial message if provided
+  useEffect(() => {
+    if (initialMessage) {
+      const userMessage: Message = {
+        id: Date.now().toString(),
+        content: initialMessage,
+        role: 'user',
+        timestamp: new Date(),
+      };
+
+      setMessages(prev => [...prev, userMessage]);
+      setIsTyping(true);
+
+      // Simulate AI response
+      setTimeout(() => {
+        const assistantMessage: Message = {
+          id: (Date.now() + 1).toString(),
+          content: generateResponse(initialMessage),
+          role: 'assistant',
+          timestamp: new Date(),
+          type: getQueryType(initialMessage),
+        };
+        setMessages(prev => [...prev, assistantMessage]);
+        setIsTyping(false);
+      }, 1500);
+    }
+  }, [initialMessage]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
