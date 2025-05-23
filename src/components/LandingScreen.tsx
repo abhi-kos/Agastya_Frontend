@@ -42,11 +42,14 @@ const LandingScreen: React.FC<LandingScreenProps> = ({ onSendMessage }) => {
       {/* ChatGPT-style Chat Interface with Gemini Greeting */}
       <div className="flex flex-col flex-1 max-w-3xl w-full mx-auto px-4 relative z-10">
         {/* Greeting Section */}
-        <div className="flex-1 flex flex-col items-center justify-center mb-24">
-          {/* Logo */}
-          <div className="flex justify-center mb-6">
+        <div className="flex-1 flex flex-col items-center justify-center mb-24 mt-10">
+          {/* Logo and Product Name */}
+          <div className="flex flex-col items-center mb-8">
             <div className="w-16 h-16 bg-white dark:bg-black/20 rounded-xl flex items-center justify-center shadow-sm">
               <Brain className="w-8 h-8 text-hcp-primary animate-pulse-glow" />
+            </div>
+            <div className="text-xl font-semibold mt-2 text-hcp-primary dark:text-hcp-primary">
+              Agastya
             </div>
           </div>
           
