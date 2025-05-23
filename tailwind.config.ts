@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -18,7 +19,20 @@ export default {
 			}
 		},
 		extend: {
+			fontFamily: {
+				'playfair': ['Playfair Display', 'serif'],
+				'manrope': ['Manrope', 'sans-serif'],
+			},
 			colors: {
+				// Custom HCP Assistant Palette
+				'hcp-primary': '#1E41EB',
+				'hcp-teal': '#39C7A5',
+				'hcp-purple': '#795DED',
+				'hcp-gold': '#FFCA42',
+				'hcp-pink': '#EA4970',
+				'hcp-dark': '#181823',
+				
+				// Default shadcn colors
 				border: 'hsl(var(--border))',
 				input: 'hsl(var(--input))',
 				ring: 'hsl(var(--ring))',
@@ -84,11 +98,55 @@ export default {
 					to: {
 						height: '0'
 					}
+				},
+				'gradient-shift': {
+					'0%, 100%': {
+						'background-position': '0% 50%'
+					},
+					'50%': {
+						'background-position': '100% 50%'
+					}
+				},
+				'float': {
+					'0%, 100%': {
+						transform: 'translateY(0px) rotate(0deg)'
+					},
+					'33%': {
+						transform: 'translateY(-20px) rotate(2deg)'
+					},
+					'66%': {
+						transform: 'translateY(-10px) rotate(-1deg)'
+					}
+				},
+				'fade-in-up': {
+					'0%': {
+						opacity: '0',
+						transform: 'translateY(20px)'
+					},
+					'100%': {
+						opacity: '1',
+						transform: 'translateY(0)'
+					}
+				},
+				'pulse-glow': {
+					'0%, 100%': {
+						boxShadow: '0 0 20px rgba(30, 65, 235, 0.3)'
+					},
+					'50%': {
+						boxShadow: '0 0 40px rgba(30, 65, 235, 0.6)'
+					}
 				}
 			},
 			animation: {
 				'accordion-down': 'accordion-down 0.2s ease-out',
-				'accordion-up': 'accordion-up 0.2s ease-out'
+				'accordion-up': 'accordion-up 0.2s ease-out',
+				'gradient-shift': 'gradient-shift 8s ease-in-out infinite',
+				'float': 'float 6s ease-in-out infinite',
+				'fade-in-up': 'fade-in-up 0.6s ease-out',
+				'pulse-glow': 'pulse-glow 2s ease-in-out infinite'
+			},
+			backgroundSize: {
+				'300%': '300% 300%'
 			}
 		}
 	},
