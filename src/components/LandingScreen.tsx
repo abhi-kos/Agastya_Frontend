@@ -25,9 +25,67 @@ const LandingScreen: React.FC<LandingScreenProps> = ({ onSendMessage }) => {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-hcp-dark flex flex-col">
+    <div className="min-h-screen bg-white dark:bg-hcp-dark flex flex-col relative overflow-hidden">
+      {/* Fluid background animations */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none">
+        {/* Primary blue blob */}
+        <div 
+          className="absolute h-[400px] w-[400px] rounded-full opacity-[0.03] blur-[100px]"
+          style={{
+            background: '#1E41EB',
+            top: '10%',
+            left: '5%',
+            animation: 'float 15s ease-in-out infinite'
+          }}
+        />
+        
+        {/* Teal blob */}
+        <div 
+          className="absolute h-[500px] w-[500px] rounded-full opacity-[0.03] blur-[100px]"
+          style={{
+            background: '#39C7A5',
+            top: '60%',
+            right: '10%',
+            animation: 'float 20s ease-in-out infinite reverse'
+          }}
+        />
+        
+        {/* Purple blob */}
+        <div 
+          className="absolute h-[350px] w-[350px] rounded-full opacity-[0.04] blur-[80px]" 
+          style={{
+            background: '#795DED',
+            bottom: '5%',
+            left: '15%',
+            animation: 'float 17s ease-in-out infinite'
+          }}
+        />
+        
+        {/* Pink accent */}
+        <div 
+          className="absolute h-[250px] w-[250px] rounded-full opacity-[0.03] blur-[70px]"
+          style={{
+            background: '#EA4970',
+            top: '30%',
+            right: '5%',
+            animation: 'float 13s ease-in-out infinite'
+          }}
+        />
+        
+        {/* Gold accent */}
+        <div 
+          className="absolute h-[200px] w-[200px] rounded-full opacity-[0.02] blur-[60px]"
+          style={{
+            background: '#FFCA42',
+            top: '70%',
+            left: '50%',
+            animation: 'float 18s ease-in-out infinite reverse'
+          }}
+        />
+      </div>
+
       {/* ChatGPT-style Chat Interface with Gemini Greeting */}
-      <div className="flex flex-col flex-1 max-w-3xl w-full mx-auto px-4">
+      <div className="flex flex-col flex-1 max-w-3xl w-full mx-auto px-4 relative z-10">
         {/* Greeting Section */}
         <div className="flex-1 flex flex-col items-center justify-center mb-24">
           {/* Logo */}
