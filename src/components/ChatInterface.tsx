@@ -1,8 +1,9 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, FileText, Calendar, Users, Brain } from 'lucide-react';
+import { Send, Brain } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 
 interface Message {
   id: string;
@@ -53,25 +54,12 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ messages, onSendMessage }
     }
   };
 
-  const getMessageIcon = (type?: string) => {
-    switch (type) {
-      case 'research':
-        return <FileText className="w-4 h-4 text-hcp-teal" />;
-      case 'panel':
-        return <Users className="w-4 h-4 text-hcp-purple" />;
-      case 'conference':
-        return <Calendar className="w-4 h-4 text-hcp-gold" />;
-      default:
-        return null;
-    }
-  };
-
   return (
     <div className="min-h-screen flex flex-col bg-white dark:bg-hcp-dark">
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col h-screen">
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto py-6 px-4 md:px-6 space-y-6">
+        <div className="flex-1 overflow-y-auto py-6 space-y-0">
           {messages.length === 0 ? (
             <div className="flex items-center justify-center h-full">
               <div className="text-center">
@@ -84,32 +72,23 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ messages, onSendMessage }
             messages.map((message) => (
               <div
                 key={message.id}
-                className={`flex ${
-                  message.role === 'user' ? 'justify-end' : 'justify-start'
-                } animate-fade-in-up`}
+                className={`w-full py-5 px-4 md:px-6 ${
+                  message.role === 'user' ? 'bg-gray-100 dark:bg-gray-800' : 'bg-white dark:bg-hcp-dark'
+                } border-b border-gray-200 dark:border-gray-800`}
               >
-                <div
-                  className={`max-w-[85%] md:max-w-2xl lg:max-w-3xl p-4 rounded-lg ${
-                    message.role === 'user'
-                      ? 'bg-hcp-primary text-white'
-                      : 'bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 shadow-sm'
-                  }`}
-                >
-                  {message.role === 'assistant' && message.type && (
-                    <div className="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-gray-700">
-                      {getMessageIcon(message.type)}
-                      <span className="text-xs uppercase tracking-wider font-medium text-gray-500 dark:text-gray-400">
-                        {message.type} Information
-                      </span>
+                <div className="max-w-3xl mx-auto flex">
+                  {message.role === 'assistant' && (
+                    <div className="mr-4 flex-shrink-0 pt-1">
+                      <Avatar className="h-6 w-6 bg-hcp-primary text-white">
+                        <AvatarFallback>A</AvatarFallback>
+                      </Avatar>
                     </div>
                   )}
                   
-                  <div className="text-sm md:text-base leading-relaxed whitespace-pre-wrap">
-                    {message.content}
-                  </div>
-                  
-                  <div className="text-xs text-gray-400 dark:text-gray-500 mt-2 text-right">
-                    {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  <div className={`flex-1 ${message.role === 'user' ? 'text-right' : 'text-left'}`}>
+                    <p className="text-sm md:text-base leading-relaxed whitespace-pre-wrap">
+                      {message.content}
+                    </p>
                   </div>
                 </div>
               </div>
@@ -117,8 +96,13 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ messages, onSendMessage }
           )}
           
           {isTyping && (
-            <div className="flex justify-start animate-fade-in-up">
-              <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg max-w-[85%] md:max-w-2xl lg:max-w-3xl">
+            <div className="w-full py-5 px-4 md:px-6 bg-white dark:bg-hcp-dark border-b border-gray-200 dark:border-gray-800">
+              <div className="max-w-3xl mx-auto flex">
+                <div className="mr-4 flex-shrink-0 pt-1">
+                  <Avatar className="h-6 w-6 bg-hcp-primary text-white">
+                    <AvatarFallback>A</AvatarFallback>
+                  </Avatar>
+                </div>
                 <div className="flex items-center gap-2">
                   <div className="typing-indicator text-gray-600 dark:text-gray-300">Thinking</div>
                 </div>
