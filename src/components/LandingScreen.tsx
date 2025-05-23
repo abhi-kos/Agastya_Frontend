@@ -42,53 +42,53 @@ const LandingScreen: React.FC<LandingScreenProps> = ({ onSendMessage }) => {
       {/* ChatGPT-style Chat Interface with Gemini Greeting */}
       <div className="flex flex-col flex-1 max-w-3xl w-full mx-auto px-4 relative z-10">
         {/* Greeting Section */}
-        <div className="flex-1 flex flex-col items-center justify-center mb-24 mt-10">
+        <div className="flex-1 flex flex-col items-center justify-center mb-12 mt-6">
           {/* Logo and Product Name */}
-          <div className="flex flex-col items-center mb-8">
-            <div className="w-16 h-16 bg-white dark:bg-black/20 rounded-xl flex items-center justify-center shadow-sm">
-              <Brain className="w-8 h-8 text-hcp-primary animate-pulse-glow" />
+          <div className="flex flex-col items-center mb-5">
+            <div className="w-14 h-14 bg-white dark:bg-black/20 rounded-xl flex items-center justify-center shadow-sm">
+              <Brain className="w-7 h-7 text-hcp-primary animate-pulse-glow" />
             </div>
-            <div className="text-xl font-semibold mt-2 text-hcp-primary dark:text-hcp-primary">
+            <div className="text-lg font-semibold mt-2 text-hcp-primary dark:text-hcp-primary">
               Agastya
             </div>
           </div>
           
           {/* Gemini-style Greeting with Animation */}
-          <div className="text-center mb-10">
-            <h1 className="text-4xl md:text-5xl font-semibold text-gray-900 dark:text-gray-100 font-playfair mb-6 animate-fade-in-up">
+          <div className="text-center mb-6">
+            <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-gray-100 font-playfair mb-3 animate-fade-in-up">
               Hello Doctor, how can I help you?
             </h1>
-            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
+            <p className="text-base text-gray-600 dark:text-gray-300 max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
               Your intelligent research and panel support tool. How can I assist you today?
             </p>
           </div>
 
           {/* Example Suggestions (ChatGPT style) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full max-w-2xl animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
             <div 
               onClick={() => onSendMessage("Find recent research on cardiovascular medicine")}
-              className="p-4 border border-black dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
+              className="p-3 border border-black dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
             >
               <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">Find recent research on cardiovascular medicine</h3>
             </div>
             
             <div 
               onClick={() => onSendMessage("Update my panel profile information")}
-              className="p-4 border border-black dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
+              className="p-3 border border-black dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
             >
               <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">Update my panel profile information</h3>
             </div>
             
             <div 
               onClick={() => onSendMessage("Find conferences in my specialty for 2025")}
-              className="p-4 border border-black dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
+              className="p-3 border border-black dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
             >
               <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">Find conferences in my specialty for 2025</h3>
             </div>
             
             <div 
               onClick={() => onSendMessage("How do I submit my honorarium request?")}
-              className="p-4 border border-black dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
+              className="p-3 border border-black dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
             >
               <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">How do I submit my honorarium request?</h3>
             </div>
