@@ -5,17 +5,15 @@ import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 
 interface LandingScreenProps {
-  onStartChat: (message?: string) => void;
+  onSendMessage: (message: string) => void;
 }
 
-const LandingScreen: React.FC<LandingScreenProps> = ({ onStartChat }) => {
+const LandingScreen: React.FC<LandingScreenProps> = ({ onSendMessage }) => {
   const [inputValue, setInputValue] = useState('');
 
   const handleSend = () => {
     if (inputValue.trim()) {
-      onStartChat(inputValue);
-    } else {
-      onStartChat();
+      onSendMessage(inputValue);
     }
   };
 
@@ -52,28 +50,28 @@ const LandingScreen: React.FC<LandingScreenProps> = ({ onStartChat }) => {
           {/* Example Suggestions (ChatGPT style) */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
             <div 
-              onClick={() => onStartChat("Find recent research on cardiovascular medicine")}
+              onClick={() => onSendMessage("Find recent research on cardiovascular medicine")}
               className="p-4 border border-gray-200 dark:border-gray-800 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
             >
               <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">Find recent research on cardiovascular medicine</h3>
             </div>
             
             <div 
-              onClick={() => onStartChat("Update my panel profile information")}
+              onClick={() => onSendMessage("Update my panel profile information")}
               className="p-4 border border-gray-200 dark:border-gray-800 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
             >
               <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">Update my panel profile information</h3>
             </div>
             
             <div 
-              onClick={() => onStartChat("Find conferences in my specialty for 2025")}
+              onClick={() => onSendMessage("Find conferences in my specialty for 2025")}
               className="p-4 border border-gray-200 dark:border-gray-800 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
             >
               <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">Find conferences in my specialty for 2025</h3>
             </div>
             
             <div 
-              onClick={() => onStartChat("How do I submit my honorarium request?")}
+              onClick={() => onSendMessage("How do I submit my honorarium request?")}
               className="p-4 border border-gray-200 dark:border-gray-800 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
             >
               <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">How do I submit my honorarium request?</h3>

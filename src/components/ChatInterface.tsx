@@ -1,6 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, ArrowLeft, FileText, Calendar, Users, Brain } from 'lucide-react';
+import { Send, FileText, Calendar, Users, Brain } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 
@@ -13,51 +13,24 @@ interface Message {
 }
 
 interface ChatInterfaceProps {
-  onBack: () => void;
-  initialMessage?: string;
+  messages: Message[];
+  onSendMessage: (message: string) => void;
 }
 
-const ChatInterface: React.FC<ChatInterfaceProps> = ({ onBack, initialMessage }) => {
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      id: '1',
-      content: "Hello Doctor, I'm Agastya, your HCP Research & Panel Assistant. I can help you find medical research publications, manage panel support tasks, and provide conference information. What would you like assistance with today?",
-      role: 'assistant',
-      timestamp: new Date(),
-    }
-  ]);
+const ChatInterface: React.FC<ChatInterfaceProps> = ({ messages, onSendMessage }) => {
   const [inputValue, setInputValue] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
-  // Process initial message if provided
+  // Show typing indicator when waiting for a response
   useEffect(() => {
-    if (initialMessage) {
-      const userMessage: Message = {
-        id: Date.now().toString(),
-        content: initialMessage,
-        role: 'user',
-        timestamp: new Date(),
-      };
-
-      setMessages(prev => [...prev, userMessage]);
-      setIsTyping(true);
-
-      // Simulate AI response
-      setTimeout(() => {
-        const assistantMessage: Message = {
-          id: (Date.now() + 1).toString(),
-          content: generateResponse(initialMessage),
-          role: 'assistant',
-          timestamp: new Date(),
-          type: getQueryType(initialMessage),
-        };
-        setMessages(prev => [...prev, assistantMessage]);
-        setIsTyping(false);
-      }, 1500);
-    }
-  }, [initialMessage]);
+    const hasUserMessage = messages.some(msg => msg.role === 'user');
+    const hasMatchingAssistantMessage = messages.filter(msg => msg.role === 'assistant').length === 
+                                       messages.filter(msg => msg.role === 'user').length;
+    
+    setIsTyping(hasUserMessage && !hasMatchingAssistantMessage);
+  }, [messages]);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -67,57 +40,10 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onBack, initialMessage })
     scrollToBottom();
   }, [messages]);
 
-  const handleSend = async () => {
+  const handleSend = () => {
     if (!inputValue.trim()) return;
-
-    const userMessage: Message = {
-      id: Date.now().toString(),
-      content: inputValue,
-      role: 'user',
-      timestamp: new Date(),
-    };
-
-    setMessages(prev => [...prev, userMessage]);
+    onSendMessage(inputValue);
     setInputValue('');
-    setIsTyping(true);
-
-    // Simulate AI response
-    setTimeout(() => {
-      const assistantMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        content: generateResponse(inputValue),
-        role: 'assistant',
-        timestamp: new Date(),
-        type: getQueryType(inputValue),
-      };
-      setMessages(prev => [...prev, assistantMessage]);
-      setIsTyping(false);
-    }, 1500);
-  };
-
-  const generateResponse = (query: string): string => {
-    const queryLower = query.toLowerCase();
-    
-    if (queryLower.includes('research') || queryLower.includes('study') || queryLower.includes('article')) {
-      return "Based on your query, I've found several relevant research articles from recent publications. Here are the key findings and citations that might be helpful for your work:";
-    } else if (queryLower.includes('panel') || queryLower.includes('honorarium') || queryLower.includes('profile')) {
-      return "I've accessed your panel information. Here's the current status and available options related to your request:";
-    } else if (queryLower.includes('conference') || queryLower.includes('meeting') || queryLower.includes('event')) {
-      return "Here are the upcoming conferences in your specialty area, with dates, locations, and registration details:";
-    } else {
-      return "I understand you're looking for information. To provide the most relevant assistance, could you specify whether you need help with research publications, panel management, or conference information?";
-    }
-  };
-
-  const getQueryType = (query: string): 'research' | 'panel' | 'conference' => {
-    const queryLower = query.toLowerCase();
-    if (queryLower.includes('research') || queryLower.includes('study') || queryLower.includes('article')) {
-      return 'research';
-    } else if (queryLower.includes('panel') || queryLower.includes('honorarium')) {
-      return 'panel';
-    } else {
-      return 'conference';
-    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -141,107 +67,54 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onBack, initialMessage })
   };
 
   return (
-    <div className="min-h-screen flex flex-row bg-white dark:bg-hcp-dark">
-      {/* Sidebar - ChatGPT Style */}
-      <div className="w-64 bg-gray-50 dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 h-screen hidden md:flex flex-col">
-        <div className="p-4 border-b border-gray-200 dark:border-gray-800">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onBack}
-            className="text-gray-600 dark:text-gray-300 w-full justify-start gap-2"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            Back to Home
-          </Button>
-        </div>
-        
-        <div className="p-4 flex-1">
-          <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">Recent Conversations</h2>
-          <div className="space-y-1">
-            <div className="px-3 py-2 rounded-md bg-hcp-primary/10 text-hcp-primary dark:text-hcp-teal text-sm cursor-pointer">
-              Current Session
-            </div>
-            {/* Placeholder for previous conversations */}
-            <div className="px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-sm cursor-pointer text-gray-700 dark:text-gray-300">
-              Research on Cardiovascular...
-            </div>
-            <div className="px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-sm cursor-pointer text-gray-700 dark:text-gray-300">
-              Panel Management - April
-            </div>
-          </div>
-        </div>
-        
-        <div className="p-4 border-t border-gray-200 dark:border-gray-800">
-          <div className="flex items-center gap-3">
-            <div className="w-8 h-8 bg-white dark:bg-gray-800 rounded-md flex items-center justify-center">
-              <Brain className="w-4 h-4 text-hcp-primary" />
-            </div>
-            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Agastya</span>
-          </div>
-        </div>
-      </div>
-      
-      {/* Mobile header - only visible on small screens */}
-      <div className="md:hidden fixed top-0 left-0 right-0 z-10 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
-        <div className="p-3 flex items-center justify-between">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onBack}
-            className="text-gray-500"
-          >
-            <ArrowLeft className="w-5 h-5" />
-          </Button>
-          
-          <div className="flex items-center gap-2">
-            <Brain className="w-5 h-5 text-hcp-primary" />
-            <h1 className="text-lg font-medium text-gray-800 dark:text-gray-100">Agastya</h1>
-          </div>
-          
-          <div className="w-5">
-            {/* Placeholder for balance */}
-          </div>
-        </div>
-      </div>
-
-      {/* Main Chat Area - ChatGPT Style */}
+    <div className="min-h-screen flex flex-col bg-white dark:bg-hcp-dark">
+      {/* Main Chat Area */}
       <div className="flex-1 flex flex-col h-screen">
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto py-6 px-4 md:px-6 md:pt-6 md:pb-24 space-y-6 mt-14 md:mt-0">
-          {messages.map((message) => (
-            <div
-              key={message.id}
-              className={`flex ${
-                message.role === 'user' ? 'justify-end' : 'justify-start'
-              } animate-fade-in-up`}
-            >
-              <div
-                className={`max-w-[85%] md:max-w-2xl lg:max-w-3xl p-4 rounded-lg ${
-                  message.role === 'user'
-                    ? 'bg-hcp-primary text-white'
-                    : 'bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 shadow-sm'
-                }`}
-              >
-                {message.role === 'assistant' && message.type && (
-                  <div className="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-gray-700">
-                    {getMessageIcon(message.type)}
-                    <span className="text-xs uppercase tracking-wider font-medium text-gray-500 dark:text-gray-400">
-                      {message.type} Information
-                    </span>
-                  </div>
-                )}
-                
-                <div className="text-sm md:text-base leading-relaxed whitespace-pre-wrap">
-                  {message.content}
-                </div>
-                
-                <div className="text-xs text-gray-400 dark:text-gray-500 mt-2 text-right">
-                  {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                </div>
+        <div className="flex-1 overflow-y-auto py-6 px-4 md:px-6 space-y-6">
+          {messages.length === 0 ? (
+            <div className="flex items-center justify-center h-full">
+              <div className="text-center">
+                <Brain className="w-12 h-12 text-hcp-primary mx-auto mb-4" />
+                <h2 className="text-xl font-medium text-gray-700 dark:text-gray-300">Welcome to Agastya</h2>
+                <p className="text-gray-500 dark:text-gray-400 mt-2">Type a message to start chatting</p>
               </div>
             </div>
-          ))}
+          ) : (
+            messages.map((message) => (
+              <div
+                key={message.id}
+                className={`flex ${
+                  message.role === 'user' ? 'justify-end' : 'justify-start'
+                } animate-fade-in-up`}
+              >
+                <div
+                  className={`max-w-[85%] md:max-w-2xl lg:max-w-3xl p-4 rounded-lg ${
+                    message.role === 'user'
+                      ? 'bg-hcp-primary text-white'
+                      : 'bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 shadow-sm'
+                  }`}
+                >
+                  {message.role === 'assistant' && message.type && (
+                    <div className="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-gray-700">
+                      {getMessageIcon(message.type)}
+                      <span className="text-xs uppercase tracking-wider font-medium text-gray-500 dark:text-gray-400">
+                        {message.type} Information
+                      </span>
+                    </div>
+                  )}
+                  
+                  <div className="text-sm md:text-base leading-relaxed whitespace-pre-wrap">
+                    {message.content}
+                  </div>
+                  
+                  <div className="text-xs text-gray-400 dark:text-gray-500 mt-2 text-right">
+                    {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
           
           {isTyping && (
             <div className="flex justify-start animate-fade-in-up">
@@ -257,7 +130,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onBack, initialMessage })
         </div>
 
         {/* Input Area - Fixed at bottom */}
-        <div className="border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-3 md:p-4 w-full absolute bottom-0 left-0 right-0">
+        <div className="border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-3 md:p-4 w-full">
           <div className="max-w-3xl mx-auto relative">
             <Textarea
               ref={textareaRef}
