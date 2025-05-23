@@ -102,7 +102,7 @@ const LandingScreen: React.FC<LandingScreenProps> = ({ onSendMessage }) => {
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Message Agastya..."
+              placeholder="Ask me anything..."
               className="min-h-[56px] max-h-[200px] pr-12 bg-white dark:bg-gray-800 border border-black dark:border-gray-600 shadow-lg resize-none rounded-lg focus:ring-1 focus:ring-hcp-primary focus:border-hcp-primary"
               rows={1}
             />
