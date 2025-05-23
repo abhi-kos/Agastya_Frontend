@@ -29,9 +29,9 @@ const LandingScreen: React.FC<LandingScreenProps> = ({ onSendMessage }) => {
       {/* Gradient shift background animation */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div 
-          className="absolute inset-0 opacity-[0.15]"
+          className="absolute inset-0 opacity-[0.18]"
           style={{
-            background: 'linear-gradient(-45deg, #1E41EB 0%, #795DED 25%, #39C7A5 50%, #EA4970 75%, #FFCA42 100%)',
+            background: 'linear-gradient(-45deg, #1E41EB 0%, #795DED 20%, #39C7A5 40%, #EA4970 60%, #FFCA42 80%, #1E41EB 100%)',
             backgroundSize: '400% 400%',
             animation: 'gradient-shift 15s ease-in-out infinite',
             filter: 'blur(60px)'
