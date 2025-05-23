@@ -56,7 +56,7 @@ const LandingScreen: React.FC<LandingScreenProps> = ({ onSendMessage }) => {
           {/* Gemini-style Greeting with Animation */}
           <div className="text-center mb-6">
             <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-gray-100 font-playfair mb-3 animate-fade-in-up">
-              Hello Doctor, how can I help you?
+              Hello Doctor [Name]
             </h1>
             <p className="text-base text-gray-600 dark:text-gray-300 max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
               Your intelligent research and panel support tool. How can I assist you today?
