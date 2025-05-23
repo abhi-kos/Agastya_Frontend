@@ -116,9 +116,15 @@ const LandingScreen: React.FC<LandingScreenProps> = ({ onSendMessage }) => {
             </Button>
           </div>
           
-          <p className="text-xs text-gray-500 mt-2 text-center">
-            Secure • HIPAA-Compliant • For Healthcare Professionals
-          </p>
+          <div className="flex justify-center mt-2">
+            <div className="h-6 flex items-center">
+              <img 
+                src="data:image/png;base64,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"
+                alt="ZoomRx Logo" 
+                className="h-5 opacity-80 hover:opacity-100 transition-opacity"
+              />
+            </div>
+          </div>
         </div>
       </div>
     </div>
