@@ -118,11 +118,7 @@ const LandingScreen: React.FC<LandingScreenProps> = ({ onSendMessage }) => {
           
           <div className="flex justify-center mt-2">
             <div className="h-6 flex items-center opacity-80 hover:opacity-100 transition-opacity">
-              <img 
-                src="https://www.zoomrx.com/hubfs/ZoomRx%20Website_July2023/images/zrx-logo.svg" 
-                alt="ZoomRx Logo" 
-                className="h-4" 
-              />
+              <p className="text-xs text-gray-500 dark:text-gray-400">All rights reserved ZoomRx - 2025</p>
             </div>
           </div>
         </div>
