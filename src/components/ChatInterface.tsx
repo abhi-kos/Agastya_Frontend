@@ -20,7 +20,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onBack }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      content: "Hello, I'm your HCP Research & Panel Assistant. I can help you find medical research publications, manage panel support tasks, and provide conference information. What would you like assistance with today?",
+      content: "Hello Doctor, I'm Agastya, your HCP Research & Panel Assistant. I can help you find medical research publications, manage panel support tasks, and provide conference information. What would you like assistance with today?",
       role: 'assistant',
       timestamp: new Date(),
     }
@@ -112,49 +112,90 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onBack }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 dark:bg-hcp-dark flex flex-col">
-      {/* Header */}
-      <div className="bg-white dark:bg-black/20 border-b border-gray-200 dark:border-gray-800">
-        <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Button
-              variant="ghost"
-              size="sm"
-              onClick={onBack}
-              className="text-gray-500"
-            >
-              <ArrowLeft className="w-5 h-5" />
-            </Button>
-            
-            <div className="flex items-center gap-2">
-              <Brain className="w-5 h-5 text-hcp-primary" />
-              <h1 className="text-lg font-medium text-gray-800 dark:text-gray-100">HCP Assistant</h1>
+    <div className="min-h-screen flex flex-row bg-white dark:bg-hcp-dark">
+      {/* Sidebar - ChatGPT Style */}
+      <div className="w-64 bg-gray-50 dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 h-screen hidden md:flex flex-col">
+        <div className="p-4 border-b border-gray-200 dark:border-gray-800">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onBack}
+            className="text-gray-600 dark:text-gray-300 w-full justify-start gap-2"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            Back to Home
+          </Button>
+        </div>
+        
+        <div className="p-4 flex-1">
+          <h2 className="text-sm font-medium text-gray-500 dark:text-gray-400 mb-3">Recent Conversations</h2>
+          <div className="space-y-1">
+            <div className="px-3 py-2 rounded-md bg-hcp-primary/10 text-hcp-primary dark:text-hcp-teal text-sm cursor-pointer">
+              Current Session
+            </div>
+            {/* Placeholder for previous conversations */}
+            <div className="px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-sm cursor-pointer text-gray-700 dark:text-gray-300">
+              Research on Cardiovascular...
+            </div>
+            <div className="px-3 py-2 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800 text-sm cursor-pointer text-gray-700 dark:text-gray-300">
+              Panel Management - April
             </div>
           </div>
+        </div>
+        
+        <div className="p-4 border-t border-gray-200 dark:border-gray-800">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 bg-white dark:bg-gray-800 rounded-md flex items-center justify-center">
+              <Brain className="w-4 h-4 text-hcp-primary" />
+            </div>
+            <span className="text-sm font-medium text-gray-700 dark:text-gray-300">Agastya</span>
+          </div>
+        </div>
+      </div>
+      
+      {/* Mobile header - only visible on small screens */}
+      <div className="md:hidden fixed top-0 left-0 right-0 z-10 bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-800">
+        <div className="p-3 flex items-center justify-between">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={onBack}
+            className="text-gray-500"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </Button>
           
-          <div className="text-sm text-gray-500">Healthcare Professional Research & Panel Support</div>
+          <div className="flex items-center gap-2">
+            <Brain className="w-5 h-5 text-hcp-primary" />
+            <h1 className="text-lg font-medium text-gray-800 dark:text-gray-100">Agastya</h1>
+          </div>
+          
+          <div className="w-5">
+            {/* Placeholder for balance */}
+          </div>
         </div>
       </div>
 
-      {/* Messages */}
-      <div className="flex-1 overflow-y-auto py-6 px-4">
-        <div className="max-w-3xl mx-auto space-y-6">
+      {/* Main Chat Area - ChatGPT Style */}
+      <div className="flex-1 flex flex-col h-screen">
+        {/* Messages */}
+        <div className="flex-1 overflow-y-auto py-6 px-4 md:px-6 md:pt-6 md:pb-24 space-y-6 mt-14 md:mt-0">
           {messages.map((message) => (
             <div
               key={message.id}
               className={`flex ${
                 message.role === 'user' ? 'justify-end' : 'justify-start'
-              }`}
+              } animate-fade-in-up`}
             >
               <div
-                className={`max-w-[85%] p-4 rounded-lg ${
+                className={`max-w-[85%] md:max-w-2xl lg:max-w-3xl p-4 rounded-lg ${
                   message.role === 'user'
-                    ? 'bg-hcp-primary/10 text-gray-800 dark:text-white'
-                    : 'bg-white dark:bg-gray-800 shadow-sm border border-gray-100 dark:border-gray-700 text-gray-800 dark:text-gray-100'
+                    ? 'bg-hcp-primary text-white'
+                    : 'bg-gray-50 dark:bg-gray-800 text-gray-800 dark:text-gray-100 shadow-sm'
                 }`}
               >
                 {message.role === 'assistant' && message.type && (
-                  <div className="flex items-center gap-2 mb-2 pb-2 border-b border-gray-100 dark:border-gray-700">
+                  <div className="flex items-center gap-2 mb-2 pb-2 border-b border-gray-200 dark:border-gray-700">
                     {getMessageIcon(message.type)}
                     <span className="text-xs uppercase tracking-wider font-medium text-gray-500 dark:text-gray-400">
                       {message.type} Information
@@ -162,11 +203,11 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onBack }) => {
                   </div>
                 )}
                 
-                <div className="text-sm leading-relaxed whitespace-pre-wrap">
+                <div className="text-sm md:text-base leading-relaxed whitespace-pre-wrap">
                   {message.content}
                 </div>
                 
-                <div className="text-xs text-gray-400 mt-2 text-right">
+                <div className="text-xs text-gray-400 dark:text-gray-500 mt-2 text-right">
                   {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </div>
               </div>
@@ -174,10 +215,10 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onBack }) => {
           ))}
           
           {isTyping && (
-            <div className="flex justify-start">
-              <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 max-w-[85%]">
+            <div className="flex justify-start animate-fade-in-up">
+              <div className="bg-gray-50 dark:bg-gray-800 p-4 rounded-lg max-w-[85%] md:max-w-2xl lg:max-w-3xl">
                 <div className="flex items-center gap-2">
-                  <div className="typing-indicator">Thinking</div>
+                  <div className="typing-indicator text-gray-600 dark:text-gray-300">Thinking</div>
                 </div>
               </div>
             </div>
@@ -185,26 +226,24 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onBack }) => {
           
           <div ref={messagesEndRef} />
         </div>
-      </div>
 
-      {/* Input Area */}
-      <div className="border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4">
-        <div className="max-w-3xl mx-auto">
-          <div className="flex items-end gap-3">
+        {/* Input Area - Fixed at bottom */}
+        <div className="border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-3 md:p-4 w-full absolute bottom-0 left-0 right-0">
+          <div className="max-w-3xl mx-auto relative">
             <Textarea
               ref={textareaRef}
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Ask about research articles, panel support, or conferences..."
-              className="min-h-[56px] max-h-[120px] bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-700 resize-none rounded-lg focus:ring-1 focus:ring-hcp-primary focus:border-hcp-primary"
+              placeholder="Message Agastya..."
+              className="min-h-[56px] max-h-[200px] pr-12 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 resize-none rounded-lg focus:ring-1 focus:ring-hcp-primary focus:border-hcp-primary"
               disabled={isTyping}
             />
             
             <Button
               onClick={handleSend}
               disabled={!inputValue.trim() || isTyping}
-              className="h-[56px] px-4 bg-hcp-primary hover:bg-hcp-primary/90 text-white"
+              className="absolute right-2 bottom-2 h-10 w-10 p-0 rounded-md bg-hcp-primary hover:bg-hcp-primary/90 text-white flex items-center justify-center"
             >
               <Send className="w-5 h-5" />
             </Button>
