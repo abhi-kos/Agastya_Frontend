@@ -55,11 +55,11 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ messages, onSendMessage }
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-white dark:bg-hcp-dark">
+    <div className="min-h-screen flex flex-col bg-white dark:bg-gray-800">
       {/* Main Chat Area */}
       <div className="flex-1 flex flex-col h-screen">
         {/* Messages */}
-        <div className="flex-1 overflow-y-auto py-6 space-y-0">
+        <div className="flex-1 overflow-y-auto">
           {messages.length === 0 ? (
             <div className="flex items-center justify-center h-full">
               <div className="text-center">
@@ -72,38 +72,43 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ messages, onSendMessage }
             messages.map((message) => (
               <div
                 key={message.id}
-                className={`w-full py-5 px-4 md:px-6 ${
-                  message.role === 'user' ? 'bg-gray-100 dark:bg-gray-800' : 'bg-white dark:bg-hcp-dark'
-                } border-b border-gray-200 dark:border-gray-800`}
+                className={`w-full py-4 px-4 md:px-8 ${
+                  message.role === 'user' ? 'bg-gray-50 dark:bg-gray-700' : 'bg-white dark:bg-gray-800'
+                }`}
               >
-                <div className="max-w-3xl mx-auto flex">
+                <div className="max-w-3xl mx-auto">
                   {message.role === 'assistant' && (
-                    <div className="mr-4 flex-shrink-0 pt-1">
-                      <Avatar className="h-6 w-6 bg-hcp-primary text-white">
-                        <AvatarFallback>A</AvatarFallback>
-                      </Avatar>
+                    <div className="flex items-start">
+                      <div className="mr-4 flex-shrink-0 pt-1">
+                        <Avatar className="h-6 w-6 bg-hcp-primary text-white">
+                          <AvatarFallback>A</AvatarFallback>
+                        </Avatar>
+                      </div>
+                      <div className="text-sm md:text-base leading-relaxed whitespace-pre-wrap text-gray-800 dark:text-gray-200">
+                        {message.content}
+                      </div>
                     </div>
                   )}
                   
-                  <div className={`flex-1 ${message.role === 'user' ? 'text-right' : 'text-left'}`}>
-                    <p className="text-sm md:text-base leading-relaxed whitespace-pre-wrap">
+                  {message.role === 'user' && (
+                    <div className="text-sm md:text-base leading-relaxed whitespace-pre-wrap text-gray-800 dark:text-gray-200">
                       {message.content}
-                    </p>
-                  </div>
+                    </div>
+                  )}
                 </div>
               </div>
             ))
           )}
           
           {isTyping && (
-            <div className="w-full py-5 px-4 md:px-6 bg-white dark:bg-hcp-dark border-b border-gray-200 dark:border-gray-800">
-              <div className="max-w-3xl mx-auto flex">
-                <div className="mr-4 flex-shrink-0 pt-1">
-                  <Avatar className="h-6 w-6 bg-hcp-primary text-white">
-                    <AvatarFallback>A</AvatarFallback>
-                  </Avatar>
-                </div>
-                <div className="flex items-center gap-2">
+            <div className="w-full py-4 px-4 md:px-8 bg-white dark:bg-gray-800">
+              <div className="max-w-3xl mx-auto">
+                <div className="flex items-start">
+                  <div className="mr-4 flex-shrink-0 pt-1">
+                    <Avatar className="h-6 w-6 bg-hcp-primary text-white">
+                      <AvatarFallback>A</AvatarFallback>
+                    </Avatar>
+                  </div>
                   <div className="typing-indicator text-gray-600 dark:text-gray-300">Thinking</div>
                 </div>
               </div>
@@ -114,7 +119,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ messages, onSendMessage }
         </div>
 
         {/* Input Area - Fixed at bottom */}
-        <div className="border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-3 md:p-4 w-full">
+        <div className="border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800 p-3 md:p-4">
           <div className="max-w-3xl mx-auto relative">
             <Textarea
               ref={textareaRef}
@@ -122,7 +127,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ messages, onSendMessage }
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
               placeholder="Message Agastya..."
-              className="min-h-[56px] max-h-[200px] pr-12 bg-white dark:bg-gray-800 border-gray-300 dark:border-gray-700 resize-none rounded-lg focus:ring-1 focus:ring-hcp-primary focus:border-hcp-primary"
+              className="min-h-[56px] max-h-[200px] pr-12 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 resize-none rounded-lg focus:ring-1 focus:ring-hcp-primary focus:border-hcp-primary"
               disabled={isTyping}
             />
             
