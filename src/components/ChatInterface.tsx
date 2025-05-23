@@ -1,6 +1,6 @@
 
 import React, { useState, useRef, useEffect } from 'react';
-import { Send, User, Bot, ArrowLeft, Sparkles, FileText, Calendar, Users } from 'lucide-react';
+import { Send, ArrowLeft, FileText, Calendar, Users, Brain } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 
@@ -20,7 +20,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onBack }) => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
-      content: "Hello! I'm your HCP Assistant. I can help you with research queries, panel support, and conference information. What would you like to know today?",
+      content: "Hello, I'm your HCP Research & Panel Assistant. I can help you find medical research publications, manage panel support tasks, and provide conference information. What would you like assistance with today?",
       role: 'assistant',
       timestamp: new Date(),
     }
@@ -70,13 +70,13 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onBack }) => {
     const queryLower = query.toLowerCase();
     
     if (queryLower.includes('research') || queryLower.includes('study') || queryLower.includes('article')) {
-      return "I found several relevant research articles for your query. Based on the latest publications in PubMed, here are the most relevant findings: [Research results would be displayed here with citations and abstracts from your vector database]";
+      return "Based on your query, I've found several relevant research articles from recent publications. Here are the key findings and citations that might be helpful for your work:";
     } else if (queryLower.includes('panel') || queryLower.includes('honorarium') || queryLower.includes('profile')) {
-      return "I can help you with panel-related queries. Let me check your current status and available options. [Panel support information would be retrieved from your SQL database]";
+      return "I've accessed your panel information. Here's the current status and available options related to your request:";
     } else if (queryLower.includes('conference') || queryLower.includes('meeting') || queryLower.includes('event')) {
-      return "Here are the upcoming conferences relevant to your specialty: [Conference information would be displayed with dates, locations, and registration details]";
+      return "Here are the upcoming conferences in your specialty area, with dates, locations, and registration details:";
     } else {
-      return "I understand you're looking for information. Could you please specify if you need help with research articles, panel support, or conference information? This will help me provide you with the most accurate assistance.";
+      return "I understand you're looking for information. To provide the most relevant assistance, could you specify whether you need help with research publications, panel management, or conference information?";
     }
   };
 
@@ -107,91 +107,75 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onBack }) => {
       case 'conference':
         return <Calendar className="w-4 h-4 text-hcp-gold" />;
       default:
-        return <Sparkles className="w-4 h-4 text-hcp-primary" />;
+        return null;
     }
   };
 
   return (
-    <div className="min-h-screen bg-hcp-dark flex flex-col">
+    <div className="min-h-screen bg-gray-50 dark:bg-hcp-dark flex flex-col">
       {/* Header */}
-      <div className="bg-black/40 backdrop-blur-sm border-b border-gray-800 p-4">
-        <div className="max-w-4xl mx-auto flex items-center gap-4">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={onBack}
-            className="text-gray-400 hover:text-white hover:bg-gray-800"
-          >
-            <ArrowLeft className="w-5 h-5" />
-          </Button>
-          
+      <div className="bg-white dark:bg-black/20 border-b border-gray-200 dark:border-gray-800">
+        <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between">
           <div className="flex items-center gap-3">
-            <div className="w-10 h-10 bg-gradient-to-br from-hcp-primary to-hcp-teal rounded-xl flex items-center justify-center">
-              <Bot className="w-5 h-5 text-white" />
-            </div>
-            <div>
-              <h1 className="text-lg font-semibold text-white">HCP Assistant</h1>
-              <p className="text-sm text-gray-400">Research • Panel Support • Conferences</p>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={onBack}
+              className="text-gray-500"
+            >
+              <ArrowLeft className="w-5 h-5" />
+            </Button>
+            
+            <div className="flex items-center gap-2">
+              <Brain className="w-5 h-5 text-hcp-primary" />
+              <h1 className="text-lg font-medium text-gray-800 dark:text-gray-100">HCP Assistant</h1>
             </div>
           </div>
+          
+          <div className="text-sm text-gray-500">Healthcare Professional Research & Panel Support</div>
         </div>
       </div>
 
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto p-4">
-        <div className="max-w-4xl mx-auto space-y-6">
+      <div className="flex-1 overflow-y-auto py-6 px-4">
+        <div className="max-w-3xl mx-auto space-y-6">
           {messages.map((message) => (
             <div
               key={message.id}
-              className={`flex gap-4 animate-fade-in-up ${
+              className={`flex ${
                 message.role === 'user' ? 'justify-end' : 'justify-start'
               }`}
             >
-              {message.role === 'assistant' && (
-                <div className="w-8 h-8 bg-gradient-to-br from-hcp-teal to-hcp-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                  <Bot className="w-4 h-4 text-white" />
-                </div>
-              )}
-              
               <div
-                className={`max-w-[80%] p-4 rounded-2xl shadow-lg ${
+                className={`max-w-[85%] p-4 rounded-lg ${
                   message.role === 'user'
-                    ? 'chat-message-user text-white ml-12'
-                    : 'chat-message-assistant text-gray-100'
+                    ? 'bg-hcp-primary/10 text-gray-800 dark:text-white'
+                    : 'bg-white dark:bg-gray-800 shadow-sm border border-gray-100 dark:border-gray-700 text-gray-800 dark:text-gray-100'
                 }`}
               >
                 {message.role === 'assistant' && message.type && (
-                  <div className="flex items-center gap-2 mb-2 pb-2 border-b border-gray-700">
+                  <div className="flex items-center gap-2 mb-2 pb-2 border-b border-gray-100 dark:border-gray-700">
                     {getMessageIcon(message.type)}
-                    <span className="text-xs text-gray-400 uppercase tracking-wide">
-                      {message.type} Query
+                    <span className="text-xs uppercase tracking-wider font-medium text-gray-500 dark:text-gray-400">
+                      {message.type} Information
                     </span>
                   </div>
                 )}
                 
-                <p className="text-sm leading-relaxed whitespace-pre-wrap">
+                <div className="text-sm leading-relaxed whitespace-pre-wrap">
                   {message.content}
-                </p>
+                </div>
                 
-                <div className="text-xs text-gray-400 mt-2">
-                  {message.timestamp.toLocaleTimeString()}
+                <div className="text-xs text-gray-400 mt-2 text-right">
+                  {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                 </div>
               </div>
-              
-              {message.role === 'user' && (
-                <div className="w-8 h-8 bg-gradient-to-br from-hcp-purple to-hcp-pink rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                  <User className="w-4 h-4 text-white" />
-                </div>
-              )}
             </div>
           ))}
           
           {isTyping && (
-            <div className="flex gap-4 animate-fade-in-up">
-              <div className="w-8 h-8 bg-gradient-to-br from-hcp-teal to-hcp-primary rounded-full flex items-center justify-center flex-shrink-0 mt-1">
-                <Bot className="w-4 h-4 text-white" />
-              </div>
-              <div className="chat-message-assistant text-gray-100 p-4 rounded-2xl shadow-lg">
+            <div className="flex justify-start">
+              <div className="bg-white dark:bg-gray-800 p-4 rounded-lg shadow-sm border border-gray-100 dark:border-gray-700 max-w-[85%]">
                 <div className="flex items-center gap-2">
                   <div className="typing-indicator">Thinking</div>
                 </div>
@@ -204,32 +188,30 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ onBack }) => {
       </div>
 
       {/* Input Area */}
-      <div className="bg-black/40 backdrop-blur-sm border-t border-gray-800 p-4">
-        <div className="max-w-4xl mx-auto">
-          <div className="relative flex items-end gap-3">
-            <div className="flex-1 relative">
-              <Textarea
-                ref={textareaRef}
-                value={inputValue}
-                onChange={(e) => setInputValue(e.target.value)}
-                onKeyPress={handleKeyPress}
-                placeholder="Ask about research, panel support, or conferences..."
-                className="min-h-[60px] max-h-[120px] bg-gray-900/50 border-gray-700 text-gray-100 placeholder-gray-400 resize-none pr-12 rounded-2xl focus:ring-2 focus:ring-hcp-primary focus:border-transparent"
-                disabled={isTyping}
-              />
-            </div>
+      <div className="border-t border-gray-200 dark:border-gray-800 bg-white dark:bg-gray-900 p-4">
+        <div className="max-w-3xl mx-auto">
+          <div className="flex items-end gap-3">
+            <Textarea
+              ref={textareaRef}
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              onKeyPress={handleKeyPress}
+              placeholder="Ask about research articles, panel support, or conferences..."
+              className="min-h-[56px] max-h-[120px] bg-gray-50 dark:bg-gray-800 border-gray-300 dark:border-gray-700 resize-none rounded-lg focus:ring-1 focus:ring-hcp-primary focus:border-hcp-primary"
+              disabled={isTyping}
+            />
             
             <Button
               onClick={handleSend}
               disabled={!inputValue.trim() || isTyping}
-              className="bg-gradient-to-r from-hcp-primary to-hcp-teal hover:from-hcp-primary/90 hover:to-hcp-teal/90 rounded-2xl h-[60px] px-6 shadow-lg hover:shadow-hcp-primary/25 transition-all duration-300 hover:scale-105"
+              className="h-[56px] px-4 bg-hcp-primary hover:bg-hcp-primary/90 text-white"
             >
               <Send className="w-5 h-5" />
             </Button>
           </div>
           
           <p className="text-xs text-gray-500 mt-2 text-center">
-            Press Enter to send, Shift+Enter for new line
+            Enter to send • Shift+Enter for new line
           </p>
         </div>
       </div>
