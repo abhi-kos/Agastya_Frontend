@@ -64,28 +64,28 @@ const LandingScreen: React.FC<LandingScreenProps> = ({ onSendMessage }) => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 w-full max-w-2xl animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
             <div 
               onClick={() => onSendMessage("Find recent research on cardiovascular medicine")}
-              className="p-4 border border-gray-200 dark:border-gray-800 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
+              className="p-4 border border-black dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
             >
               <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">Find recent research on cardiovascular medicine</h3>
             </div>
             
             <div 
               onClick={() => onSendMessage("Update my panel profile information")}
-              className="p-4 border border-gray-200 dark:border-gray-800 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
+              className="p-4 border border-black dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
             >
               <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">Update my panel profile information</h3>
             </div>
             
             <div 
               onClick={() => onSendMessage("Find conferences in my specialty for 2025")}
-              className="p-4 border border-gray-200 dark:border-gray-800 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
+              className="p-4 border border-black dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
             >
               <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">Find conferences in my specialty for 2025</h3>
             </div>
             
             <div 
               onClick={() => onSendMessage("How do I submit my honorarium request?")}
-              className="p-4 border border-gray-200 dark:border-gray-800 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
+              className="p-4 border border-black dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors cursor-pointer"
             >
               <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">How do I submit my honorarium request?</h3>
             </div>
