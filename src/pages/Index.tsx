@@ -64,9 +64,13 @@ const Index = () => {
   return (
     <div className="min-h-screen">
       {showLanding ? (
-        <LandingScreen onSendMessage={handleSendMessage} />
+        <div className="transition-all duration-300">
+          <LandingScreen onSendMessage={handleSendMessage} />
+        </div>
       ) : (
-        <ChatInterface messages={messages} onSendMessage={handleSendMessage} />
+        <div className="transition-all duration-300 animate-fade-in">
+          <ChatInterface messages={messages} onSendMessage={handleSendMessage} />
+        </div>
       )}
     </div>
   );

@@ -44,7 +44,7 @@ const LandingScreen: React.FC<LandingScreenProps> = ({ onSendMessage }) => {
         {/* Greeting Section */}
         <div className="flex-1 flex flex-col items-center justify-center mb-12 mt-6">
           {/* Logo and Product Name */}
-          <div className="flex flex-col items-center mb-5">
+          <div className="flex flex-col items-center mb-5" id="logo-container">
             <div className="w-14 h-14 bg-white dark:bg-black/20 rounded-xl flex items-center justify-center shadow-sm">
               <Brain className="w-7 h-7 text-hcp-primary animate-pulse-glow" />
             </div>
@@ -56,7 +56,7 @@ const LandingScreen: React.FC<LandingScreenProps> = ({ onSendMessage }) => {
           {/* Gemini-style Greeting with Animation */}
           <div className="text-center mb-6">
             <h1 className="text-3xl md:text-4xl font-semibold text-gray-900 dark:text-gray-100 font-playfair mb-3 animate-fade-in-up">
-              Hello Doctor [Name]
+              Hello Doctor
             </h1>
             <p className="text-base text-gray-600 dark:text-gray-300 max-w-2xl mx-auto animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
               Your intelligent research and panel support tool. How can I assist you today?

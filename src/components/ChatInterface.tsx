@@ -56,8 +56,22 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ messages, onSendMessage }
 
   return (
     <div className="min-h-screen flex flex-col bg-white dark:bg-gray-800">
+      {/* Fixed Header with Agastya logo */}
+      <div className="sticky top-0 z-30 bg-white dark:bg-gray-800 p-4 border-b border-gray-200 dark:border-gray-700 animate-fade-in-up">
+        <div className="flex items-center justify-center">
+          <div className="flex items-center gap-2">
+            <div className="w-8 h-8 bg-white dark:bg-black/20 rounded-lg flex items-center justify-center shadow-sm">
+              <Brain className="w-4 h-4 text-hcp-primary animate-pulse-glow" />
+            </div>
+            <div className="text-md font-semibold text-hcp-primary dark:text-hcp-primary">
+              Agastya
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Main Chat Area */}
-      <div className="flex-1 flex flex-col h-screen">
+      <div className="flex-1 flex flex-col h-screen pt-4">
         {/* Messages */}
         <div className="flex-1 overflow-y-auto">
           {messages.length === 0 ? (
@@ -126,7 +140,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ messages, onSendMessage }
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
               onKeyPress={handleKeyPress}
-              placeholder="Message Agastya..."
+              placeholder="Ask me anything..."
               className="min-h-[56px] max-h-[200px] pr-12 bg-white dark:bg-gray-700 border-gray-300 dark:border-gray-600 resize-none rounded-lg focus:ring-1 focus:ring-hcp-primary focus:border-hcp-primary"
               disabled={isTyping}
             />
