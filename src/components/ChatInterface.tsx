@@ -91,7 +91,7 @@ const ChatInterface: React.FC<ChatInterfaceProps> = ({ messages, onSendMessage }
                   )}
                   
                   {message.role === 'user' && (
-                    <div className="text-sm md:text-base leading-relaxed whitespace-pre-wrap text-gray-800 dark:text-gray-200">
+                    <div className="text-right text-sm md:text-base leading-relaxed whitespace-pre-wrap text-gray-800 dark:text-gray-200">
                       {message.content}
                     </div>
                   )}
